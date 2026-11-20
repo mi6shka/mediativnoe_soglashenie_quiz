@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Проверьте медиативное соглашение — правовой тренажер</title>
+  <style>
+    :root{--teal:#078D80;--dark:#075F58;--ink:#173C39;--pale:#EAF7F4;--line:#B8DCD5;--muted:#617b76;--bad:#B45D48;--bad-bg:#FFF4EF}
+    *{box-sizing:border-box}body{margin:0;background:#fff;color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.5}
+    .quiz{max-width:850px;margin:24px auto;padding:24px;border:1px solid var(--teal);border-radius:12px;background:#fff}
+    .top{display:flex;align-items:center;gap:14px}.mark{width:44px;height:44px;display:grid;place-items:center;background:var(--teal);color:white;border-radius:5px;font-size:25px;flex:none}
+    .brand{font-size:18px;font-weight:700;color:var(--dark);flex:1}.score{border:1px solid var(--teal);padding:8px 12px;border-radius:4px;color:var(--dark);font-weight:700;white-space:nowrap}
+    .rule{height:1px;background:var(--teal);margin:18px 0 14px}.progress{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;margin-bottom:22px}.progress span{height:7px;background:#DDEAE7;border-radius:3px}.progress .good{background:var(--teal)}.progress .bad{background:#D48C76}
+    .eyebrow{font-size:12px;font-weight:700;letter-spacing:.045em;color:var(--teal);text-transform:uppercase;margin-bottom:8px}h1,h2,h3,p{margin-top:0}h1{font-size:25px;line-height:1.25;margin-bottom:10px}h2{font-size:21px;line-height:1.3;margin-bottom:12px}p{margin-bottom:12px}.hint{color:var(--muted);font-size:14px;margin-bottom:22px}
+    .options{display:grid;grid-template-columns:1fr 1fr;gap:12px}.option{width:100%;min-height:200px;text-align:left;display:flex;flex-direction:column;gap:18px;border:1px solid #A9CEC8;border-radius:9px;background:white;padding:17px;cursor:pointer;color:var(--ink);font:inherit;transition:background .15s,border-color .15s}.option:hover:not(:disabled){background:#F5FBF9;border-color:var(--teal)}.option:focus-visible,.action:focus-visible{outline:3px solid #71c7b9;outline-offset:3px}.option:disabled{cursor:default;opacity:1}.option.chosen{border:2px solid var(--teal);background:var(--pale);padding:16px}.option.chosen.wrong{border-color:var(--bad);background:var(--bad-bg)}.option-head{display:flex;justify-content:space-between;gap:10px;color:var(--teal);font-size:12px;font-weight:700}.option-text{flex:1;font-size:15px}.option-foot{font-size:12px;color:var(--muted);border-top:1px solid #D4E8E3;padding-top:11px}
+    .feedback{margin-top:16px;padding:16px;background:var(--pale);border:1px solid var(--line);border-radius:8px}.feedback-title{font-weight:700;color:var(--dark);margin-bottom:7px}.feedback.wrong .feedback-title{color:var(--bad)}
+    .actions{display:flex;justify-content:space-between;gap:12px;margin-top:20px}.action{font:inherit;font-size:14px;font-weight:700;border-radius:7px;border:1px solid var(--teal);padding:11px 17px;cursor:pointer;background:var(--teal);color:white}.action.secondary{background:#fff;color:var(--dark)}.action:disabled{opacity:.45;cursor:not-allowed}.action.full{width:100%}
+    .result{background:var(--pale);border:1px solid var(--line);border-radius:10px;text-align:center;padding:27px 18px;margin-bottom:22px}.result-icon{font-size:35px;color:var(--teal);margin-bottom:8px}.result-label{font-size:12px;font-weight:700;color:var(--teal);letter-spacing:.05em}.result-number{font-size:31px;color:var(--dark);font-weight:700;margin:8px 0 12px}.result p{margin:0 auto;max-width:590px}
+    .error-card{border:1px solid var(--line);border-radius:9px;padding:18px;margin:13px 0}.question-again{font-size:17px;font-weight:700;margin:7px 0 18px}.section-label{font-size:12px;font-weight:700;letter-spacing:.03em;margin-bottom:5px}.section-label.bad{color:var(--bad)}.section-label.good{color:var(--teal)}.error-card hr{border:0;border-top:1px solid #D4E8E3;margin:16px 0}.explanation{background:var(--pale);border-radius:7px;padding:13px;margin-top:16px}.explanation p,.error-card p{margin:0}.correct-list{margin-top:14px}.correct-item{background:var(--pale);padding:14px;border-radius:7px;margin:8px 0}.correct-item p{margin:5px 0 0}.empty{background:var(--pale);padding:18px;border-radius:8px}
+    [hidden]{display:none!important}@media(max-width:600px){.quiz{margin:0;padding:16px;border-radius:0;border-left:0;border-right:0}.brand{font-size:16px}.mark{width:38px;height:38px}.options{grid-template-columns:1fr}.option{min-height:0;gap:12px}.option-text{min-height:45px}h1{font-size:21px}.actions .action{padding:10px 12px}}
+  </style>
+</head>
+<body>
+<main class="quiz" aria-label="Интерактивный тренажер по медиативному соглашению">
+  <header class="top"><div class="mark" aria-hidden="true">⚖</div><div class="brand">Проверьте медиативное соглашение</div><div class="score" id="score" aria-live="polite">0/5</div></header>
+  <div class="rule"></div><div class="progress" id="progress" aria-label="Прогресс теста"></div>
+  <section id="question-screen">
+    <div class="eyebrow" id="question-meta"></div><h1 id="question-title"></h1>
+    <p class="hint">Выберите формулировку, которую безопаснее включить в медиативное соглашение.</p>
+    <div class="options" id="options"></div>
+    <div class="feedback" id="feedback" hidden aria-live="polite"><div class="feedback-title" id="feedback-title"></div><div id="feedback-text"></div></div>
+    <nav class="actions" aria-label="Переход между вопросами"><button type="button" class="action secondary" id="back">Назад</button><button type="button" class="action" id="next">Следующий вопрос →</button></nav>
+  </section>
+  <section id="result-screen" hidden aria-live="polite">
+    <div class="result"><div class="result-icon" aria-hidden="true">⚖</div><div class="result-label">ВАШ РЕЗУЛЬТАТ</div><div class="result-number" id="result-number"></div><p id="result-text"></p></div>
+    <h2 id="review-title"></h2><div id="review"></div>
+    <button type="button" class="action secondary full" id="toggle-all" hidden aria-expanded="false">Показать все правильные формулировки ↓</button><div class="correct-list" id="all-answers" hidden></div>
+    <div style="margin-top:18px"><button type="button" class="action full" id="restart">↻ Пройти еще раз</button></div>
+  </section>
+</main>
+<script>
+(function(){
+  'use strict';
+  const questions=[
+    {topic:'Сроки исполнения',q:'Какое условие о сроках исполнения включите в соглашение?',options:['«Не позднее [Дата]» или «в течение [X] рабочих дней с момента [Конкретное событие]»','«В разумный срок после уведомления», «В ближайшее время», «по мере возможности»'],correct:0,why:'Оценочные категории делают обязательство неопределенным. Это затрудняет взыскание и порождает споры о моменте наступления просрочки.'},
+    {topic:'Предмет платежа',q:'Как определите сумму, которую должна выплатить сторона?',options:['«Сумма, согласованная сторонами дополнительно», «денежные средства в размере задолженности»','«Денежные средства в размере [Точная сумма цифрами и прописью] руб., включая НДС [Ставка], согласно Счету № ... от [Дата]»'],correct:1,why:'Двусмысленность в сумме или порядке расчета, в том числе в вопросах курса валют и налогов, дает повод для оспаривания.'},
+    {topic:'Объем претензий',q:'Как зафиксируете объем урегулированных претензий?',options:['«Соглашение прекращает все обязательства по Договору № 1, включая требования о взыскании основного долга, неустоек, пеней, процентов и любых убытков»','«Стороны урегулировали спор по Договору № 1», «Стороны не имеют друг к другу претензий»'],correct:0,why:'Общая формулировка может оставить возможность для новых требований по неустойкам или убыткам, которые стороны прямо не урегулировали.'},
+    {topic:'Обязательства',q:'Как определите момент, с которого сторона должна исполнить обязательство?',options:['«После получения информации от контрагента», «после проведения необходимых мероприятий»','«В течение 3 (трех) дней с момента получения оригинала письма, направленного заказным отправлением с описью вложения по адресу...»'],correct:1,why:'Важно точно определить событие, после которого обязанность становится исполнимой, чтобы избежать споров о получении информации.'},
+    {topic:'Санкции за нарушение',q:'Как закрепите ответственность за нарушение срока оплаты?',options:['«За нарушение срока оплаты устанавливается неустойка в размере [X] % от суммы просроченного платежа за каждый день просрочки»','«В случае нарушения обязательств Стороны несет ответственность согласно законодательству РФ»'],correct:0,why:'Прямое установление неустойки в соглашении делает его условия более определенными и дисциплинирует сторону.'}
+  ];
+  const $=id=>document.getElementById(id);
+  const answers=Array(questions.length).fill(null);
+  let step=0;
+  const score=()=>questions.reduce((n,q,i)=>n+(answers[i]===q.correct?1:0),0);
+  function el(tag,cls,text){const node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node;}
+  function progress(){ $('score').textContent=score()+'/5';$('progress').replaceChildren(...questions.map((q,i)=>{const p=el('span',answers[i]===null?'':answers[i]===q.correct?'good':'bad');p.setAttribute('aria-label','Вопрос '+(i+1)+': '+(answers[i]===null?'без ответа':answers[i]===q.correct?'верно':'ошибка'));return p;})); }
+  function renderQuestion(){progress();const q=questions[step],selected=answers[step];$('question-screen').hidden=false;$('result-screen').hidden=true;$('question-meta').textContent='ВОПРОС '+(step+1)+' ИЗ 5 · '+q.topic.toUpperCase();$('question-title').textContent=q.q;const opts=$('options');opts.replaceChildren();q.options.forEach((option,i)=>{const button=el('button','option'+(selected===i?' chosen'+(i===q.correct?'':' wrong'):''));button.type='button';button.disabled=selected!==null;button.setAttribute('aria-pressed',String(selected===i));const head=el('div','option-head');head.append(el('span','', 'ВАРИАНТ '+(i===0?'А':'Б')),el('span','',selected===i?(i===q.correct?'✓':'✕'):'○'));button.append(head,el('div','option-text',option),el('div','option-foot',selected===i?'Ваш выбор':selected===null?'Выбрать вариант':'Другой вариант'));button.addEventListener('click',()=>{if(answers[step]===null){answers[step]=i;renderQuestion();}});opts.append(button);});$('feedback').hidden=selected===null;if(selected!==null){$('feedback').className='feedback'+(selected===q.correct?'':' wrong');$('feedback-title').textContent=selected===q.correct?'+1 балл! Верно':'0 баллов. Это рискованная формулировка';$('feedback-text').textContent=q.why;}$('back').disabled=step===0;$('next').disabled=selected===null;$('next').textContent=step===questions.length-1?'Посмотреть результат →':'Следующий вопрос →';}
+  function section(parent,label,value,kind){parent.append(el('div','section-label '+kind,label),el('p','',value));}
+  function renderResults(){progress();$('question-screen').hidden=true;$('result-screen').hidden=false;const n=score();$('result-number').textContent=n+' из 5 баллов';$('result-text').textContent=n===5?'Отличный результат!':n===4?'Хорошо, но одна неточная формулировка осталась. Проверьте ее, чтобы примирение не спровоцировало новые разногласия.':n===3?'В соглашении остались размытые условия. Они могут вызвать споры о том, что и когда должны исполнить стороны.':n===2?'Несколько условий требуют доработки. Иначе вместо быстрого урегулирования стороны рискуют столкнуться с новыми разногласиями.':'Упс! Кажется, соглашение составляли в спешке. Посмотрите разбор ошибок и попробуйте еще раз.';const mistakes=questions.map((q,i)=>({...q,index:i,selected:answers[i]})).filter(q=>q.selected!==q.correct);$('review-title').textContent=mistakes.length?'Разбор ошибок ('+mistakes.length+')':'Ошибок нет';const review=$('review');review.replaceChildren();if(!mistakes.length){review.append(el('div','empty','Все пять ответов правильные! Вы верно выбрали формулировки для каждого условия соглашения.'));}else{mistakes.forEach(q=>{const card=el('article','error-card');card.append(el('div','eyebrow','ВОПРОС '+(q.index+1)+' · '+q.topic.toUpperCase()),el('div','question-again',q.q));section(card,'ВАШ ОТВЕТ',q.options[q.selected],'bad');card.append(el('hr'));section(card,'КАК ПРАВИЛЬНО',q.options[q.correct],'good');const explain=el('div','explanation');section(explain,'ПОЧЕМУ',q.why,'');card.append(explain);review.append(card);});}const toggle=$('toggle-all');toggle.hidden=!mistakes.length;toggle.setAttribute('aria-expanded','false');toggle.textContent='Показать все правильные формулировки ↓';$('all-answers').hidden=true;$('all-answers').replaceChildren(...questions.map((q,i)=>{const div=el('div','correct-item');div.append(el('strong','',(i+1)+'. '+q.topic),el('p','',q.options[q.correct]));return div;}));}
+  $('back').addEventListener('click',()=>{if(step>0){step--;renderQuestion();}});
+  $('next').addEventListener('click',()=>{if(answers[step]===null)return;if(step===questions.length-1)renderResults();else{step++;renderQuestion();}});
+  $('toggle-all').addEventListener('click',()=>{const visible=$('all-answers').hidden;$('all-answers').hidden=!visible;$('toggle-all').setAttribute('aria-expanded',String(visible));$('toggle-all').textContent=visible?'Скрыть правильные формулировки ↑':'Показать все правильные формулировки ↓';});
+  $('restart').addEventListener('click',()=>{answers.fill(null);step=0;renderQuestion();});
+  renderQuestion();
+})();
+</script>
+</body>
+</html>
